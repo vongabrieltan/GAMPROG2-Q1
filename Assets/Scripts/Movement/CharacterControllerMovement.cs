@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class CharacterControllerMovement : MonoBehaviour
 {
-    [SerializeField]
-    private float moveSpeed = 2.0f;
-    [SerializeField]
-    private float gravityScale = 1.0f;
+    private CharacterController characterController;
 
     private float gravity = -9.8f;
 
-    private CharacterController characterController;
+    [SerializeField]
+    private float moveSpeed = 4.0f;
+    [SerializeField]
+    private float gravityScale = 1.0f;
+    [SerializeField]
+    private float jumpHeight = 3.0f;
+
+    Vector3 velocity;
+    public Transform groundCheck;
+    public float groundDistance = 0.4f;
+    public LayerMask groundMask;
+    bool isGrounded;
 
     private void Awake()
     {
@@ -25,14 +33,40 @@ public class CharacterControllerMovement : MonoBehaviour
 
     private void Move()
     {
+       isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+       if(isGrounded && velocity.y < 0.0f)
+       {
+            velocity.y = -2.0f;
+       }
+       
        float xMove = Input.GetAxis("Horizontal");
        float zMove = Input.GetAxis("Vertical");
 
         Vector3 moveDirection = (transform.right * xMove) + (transform.forward * zMove);
-        moveDirection.y += gravity * Time.deltaTime * gravityScale;
-        moveDirection *= moveSpeed * Time.deltaTime;
-       
+
+        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+
+        if(Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravity * gravityScale);
+        }
+
+        velocity.y += gravity * gravityScale * Time.deltaTime;
+
+        characterController.Move(velocity * Time.deltaTime);
+        //moveDirection.y += gravity * Time.deltaTime * gravityScale;
+        //moveDirection *= moveSpeed * Time.deltaTime;
+        
         //Debug.Log(moveDirection);
-        characterController.Move(moveDirection);
+        //characterController.Move(moveDirection);
+
+        
+        /*
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+            moveDirection.y += Mathf.Sqrt(jumpPower * -3.0f * gravity * gravityScale);
+        }
+        */
     }
 }
