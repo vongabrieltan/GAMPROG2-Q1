@@ -17,6 +17,29 @@ public class RaycastController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position,
+            transform.forward, out hit, raycastDistance))
+        {
+            //Debug.Log($"Raycast has hit {hit.collider.gameObject.name}");
+            /*
+            // old way if Raycast hits an Interactable class, call Interact function
+            if(hit.collider.gameObject.GetComponent<Interactable>() != null)
+            {
+                hit.collider.gameObject.GetComponent<Interactable>().Interact();
+            }
+            */
+            // new way 
+            if(hit.collider.TryGetComponent<Interactable>(out Interactable interactable))
+            {
+                if(Input.GetMouseButtonDown(0))
+                {
+                    interactable.Interact();
+                }
+            }
+        }
+        Debug.DrawRay(transform.position, transform.forward * raycastDistance, Color.red);
+
         //TODO: Raycast
         //1. Perform a raycast originating from the gameobject's position towards its forward direction.
         //   Make sure that the raycast will only hit the layer specified in the layermask
