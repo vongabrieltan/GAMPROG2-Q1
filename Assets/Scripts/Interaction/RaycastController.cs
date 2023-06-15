@@ -10,33 +10,44 @@ public class RaycastController : MonoBehaviour
 
     [SerializeField]
     //The layer that will determine what the raycast will hit
-    LayerMask layerMask;
+    LayerMask interactableLayer;
     //The UI text component that will display the name of the interactable hit
     public TextMeshProUGUI interactionInfo;
-
+    
     // Update is called once per frame
     private void Update()
     {
         RaycastHit hit;
         if(Physics.Raycast(transform.position,
-            transform.forward, out hit, raycastDistance))
+            transform.forward, out hit, raycastDistance, interactableLayer))
         {
             //Debug.Log($"Raycast has hit {hit.collider.gameObject.name}");
+            //Vector2 screenPosition = Camera.main.WorldToScreenPoint(hit.point);
+            //interactionInfo.SetActive(true);
+            
             /*
             // old way if Raycast hits an Interactable class, call Interact function
             if(hit.collider.gameObject.GetComponent<Interactable>() != null)
             {
-                hit.collider.gameObject.GetComponent<Interactable>().Interact();
+                if(Input.GetMouseButtonDown(0))
+                {
+                    hit.collider.gameObject.GetComponent<Interactable>().Interact();
+                }
             }
             */
             // new way 
             if(hit.collider.TryGetComponent<Interactable>(out Interactable interactable))
             {
+                interactionInfo.text = interactable.id;
                 if(Input.GetMouseButtonDown(0))
                 {
                     interactable.Interact();
                 }
             }
+        }
+        else
+        {
+            interactionInfo.text = " ";
         }
         Debug.DrawRay(transform.position, transform.forward * raycastDistance, Color.red);
 

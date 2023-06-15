@@ -46,6 +46,7 @@ public class Attribute
 public enum AttributeType
 {
     HP,
+    MP,
     DEF,
     ATK,
     // TODO
