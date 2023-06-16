@@ -15,12 +15,18 @@ public class ItemData
 public enum ItemType
 {
     Consumable,
-    Equipabble, 
+    Equipabble,
+    Quest 
 }
 
 public enum EquipmentSlotType
 {
     None,
+    Head,
+    Body,
+    Legs,
+    MainHand,
+    OffHand,
     // TODO
     // Define other equipment slots here
 }
@@ -41,6 +47,10 @@ public class Attribute
 public enum AttributeType
 {
     HP,
+    MP,
+    DEF,
+    STR,
+    AGI
     // TODO
     // Add other attribute types here
 }
