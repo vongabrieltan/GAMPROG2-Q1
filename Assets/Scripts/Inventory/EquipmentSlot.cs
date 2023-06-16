@@ -32,12 +32,16 @@ public class EquipmentSlot : MonoBehaviour
         int x = InventoryManager.Instance.GetEmptyInventorySlot();
         if(x <= 4)
         {
-            InventoryManager.Instance.inventorySlots[x].SetItem(itemData);
-            InventoryManager.Instance.player.RemoveAttributes(itemData.attributes); //MUST run before itemData = null
-            itemData = null;
-            defaultIcon.enabled = true;
-            itemIcon.enabled = false;
-            itemIcon.sprite = null;
+            if(itemData != null) //prevents bug that calls Unequip function when pressing Spacebar immediately after using an item
+            {
+                InventoryManager.Instance.inventorySlots[x].SetItem(itemData);
+                InventoryManager.Instance.player.RemoveAttributes(itemData.attributes); //MUST run before itemData = null
+                itemData = null;
+                defaultIcon.enabled = true;
+                itemIcon.enabled = false;
+                itemIcon.sprite = null;
+            }
+            
         }
     }
 }

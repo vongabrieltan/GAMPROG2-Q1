@@ -57,13 +57,10 @@ public class InventoryManager : MonoBehaviour
     {
         // TODO
         // If the item is a consumable, simply add the attributes of the item to the player.
+        /*
         if(data.type == 0)
         {
             player.AddAttributes(data.attributes);
-            /*if(data.Attribute.type == HP)
-            {
-                player.Attribute.type.HP += data.Attribute.value;
-            }*/
         }
         // If it is equippable, get the equipment slot that matches the item's slot.
         // Set the equipment slot's item as that of the used item
@@ -79,7 +76,28 @@ public class InventoryManager : MonoBehaviour
                     break;
                 }
             }
-            //player.AddAttributes(data.attributes);
+        }
+        */
+        switch(data.type)
+        {
+            case ItemType.Consumable:
+                player.AddAttributes(data.attributes);
+                break;
+            case ItemType.Equipabble:
+                for(e = 0; e <= 4; e++)
+                {
+                    //Debug.Log($"e = {e} = {equipmentSlots[e].type}");
+                    if(equipmentSlots[e].type == data.slotType)
+                    {
+                        equipmentSlots[e].SetItem(data);
+                        //Debug.Log($"e final = {e} = {equipmentSlots[e].type}");
+                        break;
+                    }
+                }
+                break;
+            case ItemType.Quest:
+                //nothing happens - prevention of use is at InventorySlots.cs
+                break;
         }
     }
 

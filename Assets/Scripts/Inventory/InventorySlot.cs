@@ -12,19 +12,29 @@ public class InventorySlot : MonoBehaviour
     {
         // TODO
         // Set the item data the and icons here
-        itemData = data;
-        itemIcon.enabled = true;
-        itemIcon.sprite = data.icon;
+        if(data != null) //prevents bug that calls SetItem function when pressing Spacebar immediately after using an item
+        {
+            itemData = data;
+            itemIcon.enabled = true;
+            itemIcon.sprite = data.icon;
+        }
+        
     }
 
     public void UseItem()
     {
-        InventoryManager.Instance.UseItem(itemData);
-        // TODO
-        // Reset the item data and the icons here
-        itemData = null;
-        itemIcon.enabled = false;
-        itemIcon.sprite = null;
+        if(itemData != null)
+        {
+            InventoryManager.Instance.UseItem(itemData);
+            // TODO
+            // Reset the item data and the icons here
+            if(itemData.type != ItemType.Quest) //prevents ItemType.Quest from being used
+            {
+                itemIcon.enabled = false;
+                itemIcon.sprite = null;
+                itemData = null;
+            }
+        }
     }
 
     public bool HasItem()

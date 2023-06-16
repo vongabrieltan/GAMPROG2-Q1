@@ -15,7 +15,8 @@ public class ItemData
 public enum ItemType
 {
     Consumable,
-    Equipabble, 
+    Equipabble,
+    Quest 
 }
 
 public enum EquipmentSlotType
@@ -49,7 +50,7 @@ public enum AttributeType
     MP,
     DEF,
     STR,
-    AGI,
+    AGI
     // TODO
     // Add other attribute types here
 }
