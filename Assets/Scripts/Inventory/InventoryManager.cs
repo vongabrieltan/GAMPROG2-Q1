@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    public int i, inv;
+    public int i, inv, e;
 
     public Player player;
     //For now, this will store information of the Items that can be added to the inventory
@@ -69,7 +69,17 @@ public class InventoryManager : MonoBehaviour
         // Set the equipment slot's item as that of the used item
         else
         {
-
+            for(e = 0; e <= 4; e++)
+            {
+                //Debug.Log($"e = {e} = {equipmentSlots[e].type}");
+                if(equipmentSlots[e].type == data.slotType)
+                {
+                    equipmentSlots[e].SetItem(data);
+                    //Debug.Log($"e final = {e} = {equipmentSlots[e].type}");
+                    break;
+                }
+            }
+            //player.AddAttributes(data.attributes);
         }
     }
 
@@ -85,7 +95,7 @@ public class InventoryManager : MonoBehaviour
         //Debug.Log($"i = {i}");
         //2. Get the index of the InventorySlot that does not have any Item and set its Item to the Item found
         inventorySlots[GetEmptyInventorySlot()].SetItem(itemDatabase[i]);
-        Debug.Log($"inv = {inv} = {inventorySlots[inv].itemData.id}");
+        //Debug.Log($"inv = {inv} = {inventorySlots[inv].itemData.id}");
     }
 
     public int GetEmptyInventorySlot()
@@ -95,10 +105,10 @@ public class InventoryManager : MonoBehaviour
         
         for(inv = 0; inv <= 4; inv++)
         {
-            //Debug.Log($"inv = {inv} = {inventorySlots[inv].itemData.id}");
-            if(inventorySlots[inv].itemData.id == "")
+            //Debug.Log($"inv = {inv}");
+            if(inventorySlots[inv].itemData == null || inventorySlots[inv].itemData.id == "")
             {
-                //Debug.Log($"inv = {inv}");
+                //Debug.Log($"inv final = {inv}");
                 break; //prevents inv from incrementing
             }
         }

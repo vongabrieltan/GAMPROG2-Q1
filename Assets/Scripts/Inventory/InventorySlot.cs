@@ -29,7 +29,8 @@ public class InventorySlot : MonoBehaviour
 
     public bool HasItem()
     {
-        //return itemData != null;
+        return itemData != null;
+        /*
         if(itemData != null)
         {
             return true;
@@ -38,5 +39,6 @@ public class InventorySlot : MonoBehaviour
         {
             return false;
         }
+        */
     }
 }

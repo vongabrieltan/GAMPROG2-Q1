@@ -48,7 +48,8 @@ public enum AttributeType
     HP,
     MP,
     DEF,
-    ATK,
+    STR,
+    AGI,
     // TODO
     // Add other attribute types here
 }
